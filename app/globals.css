@@ -1,0 +1,112 @@
+@font-face {
+  font-family: 'Fujimaru';
+  src: url('/fonts/Fujimaru.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.shogun-title {
+  font-family: 'Fujimaru', serif;
+}
+
+
+/* Base styles and animated gradient background */
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: radial-gradient(ellipse at center, #1a2537 70%, #22223b 100%);
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  color: #eee;
+  transition: background 1s;
+  animation: gradientMove 16s ease-in-out infinite;
+}
+@keyframes gradientMove {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.logo-glow {
+  margin-bottom: 28px;
+  box-shadow: 0 0 28px #d6a309, 0 0 80px #fff5cc33;
+  border-radius: 50%;
+}
+.shogun-title {
+  font-family: 'Fujimaru', serif;
+  font-size: 3.6rem;
+  letter-spacing: 0.1em;
+  color: #cba250;
+  text-shadow: 0 3px 24px #b9a05388, 0 1px 0 #282838;
+}
+.launch-msg {
+  color: #bd7373;
+  font-size: 1.20rem;
+  margin-top: 8px;
+  margin-bottom: 26px;
+}
+.product-desc {
+  color: #dfdfe79f;
+  font-size: 1.9rem;
+  max-width: 850px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: 'Fujimaru', serif;
+}
+form {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 20px;
+}
+input[type="email"] {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #232946;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 1px 8px #06090e99;
+  width: 280px;
+  outline: none;
+}
+button {
+  background: #b9a053;
+  color: #22223b;
+  padding: 12px 35px;
+  border-radius: 8px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #baa05380;
+  transition: background 0.4s, transform 0.2s;
+}
+button:hover {
+  background: linear-gradient(90deg, #ecd5a1, #b9a053 70%);
+  transform: scale(1.08);
+}
+
+h1{
+  font-family: 'Fujimaru', serif;
+}
+
+.background-image {
+  background-image: url('C:/Users/Navin Raajan/Desktop/shogun-ai/public/download.jpg'); /* replace with your image path in public */
+  background-size: cover;       /* make image cover entire container */
+  background-position: center;  /* center the image */
+  background-repeat: no-repeat; /* prevent tiling */
+  height: 100vh;                /* full viewport height */
+  width: 100vw;                 /* full viewport width */
+  position: fixed;              /* fix it behind your content */
+  top: 0;
+  left: 0;
+  z-index: -1;                 /* behind everything */
+  filter: brightness(0.7);     /* optional: darken image for contrast */
+}
