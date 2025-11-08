@@ -1,13 +1,42 @@
 "use client";
+import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  const [status, setStatus] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzzy-oSbOELCPMrDUIZan0SYcWzLQSXXJBzjj91a0qBB_RZo2r1nkgVGv0nJ_5ke7UM/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // No response due to no-cors, so assume success
+      setStatus("Thank you for joining!");
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      setStatus("Failed to send. Please try again.");
+    }
+  }
+
   return (
     <>
       <div className="background-image" />
       <main>
         <motion.img
-          src="/logo1.png"
+          src="/logo.png"
           alt="Shogun Logo"
           className="logo-glow"
           initial={{ opacity: 0, scale: 0.75 }}
@@ -47,8 +76,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
-          action="https://getform.io/f/bpjzgdrb"
-          method="POST"
+          onSubmit={handleSubmit}
         >
           <input
             type="email"
@@ -61,6 +89,7 @@ export default function Home() {
             Join
           </button>
         </motion.form>
+        <div style={{ marginTop: 10, minHeight: 20, color: "#fff" }}>{status}</div>
       </main>
     </>
   );
