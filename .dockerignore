@@ -1,0 +1,16 @@
+# Git history
+.git
+
+# Local dependencies
+node_modules
+
+# Next.js build cache
+.next
+
+# Local environment files
+.env.local
+.env.*.local
+
+# Docker files
+Dockerfile
+.dockerignore
