@@ -1,11 +1,10 @@
 # === Stage 1: Build ===
-# Use the same Alpine base
+# This stage is perfect, no changes needed
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# 1. Install dependencies (with cache)
-# This won't copy your local node_modules thanks to .dockerignore
+# 1. Install dependencies
 COPY package.json package-lock.json* ./
 RUN npm ci
 
@@ -13,36 +12,33 @@ RUN npm ci
 COPY . .
 
 # 3. Run the build
-# This will create .next/standalone thanks to your next.config.js
 RUN npm run build
 
-
 # === Stage 2: Production ===
-# Start from a fresh, lightweight Alpine image
-FROM node:20-alpine AS production
+# Use the smallest possible base image
+FROM alpine:latest AS production
 
 WORKDIR /app
+
+# Install 'nodejs' runtime (much smaller than the full 'node' image)
+# Also add 'tzdata' for correct timezone support
+RUN apk add --no-cache nodejs tzdata
 
 # Create a non-root user for security
 RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
 
 # Copy the minimal standalone build from the builder stage
-# This includes the server.js, .next/static, and a minimal node_modules
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-# Copy the public folder
-COPY --from=builder /app/public ./public
-
-# Change ownership to the non-root user
-RUN chown -R nextjs:nextjs /app
+# Use --chown to set permissions at the same time
+COPY --from=builder --chown=nextjs:nextjs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nextjs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nextjs /app/public ./public
 
 # Switch to the non-root user
 USER nextjs
 
 EXPOSE 3000
-ENV PORT 3000
-ENV NODE_ENV production
-
+ENV PORT = 3000
+ENV NODE_ENV = production
+ENV TZ="Etc/UTC" 
 # Start the optimized standalone server
 CMD ["node", "server.js"]
