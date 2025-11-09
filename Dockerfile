@@ -37,8 +37,8 @@ COPY --from=builder --chown=nextjs:nextjs /app/public ./public
 USER nextjs
 
 EXPOSE 3000
-ENV PORT = 3000
-ENV NODE_ENV = production
+ENV PORT=3000
+ENV NODE_ENV=production
 ENV TZ="Etc/UTC" 
 # Start the optimized standalone server
 CMD ["node", "server.js"]
