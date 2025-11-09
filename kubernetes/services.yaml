@@ -2,14 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shogun-service
-  labels:
-    app: shogun
 spec:
-  type: NodePort
+  type: NodePort  # <-- This is the important part
   selector:
-    app: shogun
+    app: shogun     # <-- This MUST MATCH the 'app' label in your deployment
   ports:
-    - name: http
-      port: 3000         # Service port (inside cluster)
-      targetPort: 3000   # Container port
-      nodePort: 3008    # External port on node (accessible via browser)
+    - protocol: TCP
+      port: 80         # The port inside the cluster (optional to use)
+      targetPort: 3000 # The 'containerPort' from your deployment
+      
+      # Optional: You can specify a port. 
+      # If you leave this out, Kubernetes picks a random one.
+      # It MUST be in the 30000-32767 range.
+      nodePort: 30100

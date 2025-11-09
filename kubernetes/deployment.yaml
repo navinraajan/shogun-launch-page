@@ -5,32 +5,19 @@ metadata:
   labels:
     app: shogun
 spec:
-  replicas: 2
+  replicas: 2  # Run 2 copies of the app
   selector:
     matchLabels:
       app: shogun
   template:
     metadata:
       labels:
-        app: shogun
+        app: shogun  # This label MUST MATCH the service selector
     spec:
       containers:
         - name: shogun-container
-          # MODIFIED: Point to your Docker Hub repository
-          image: sudharsanan62034/shogun:landing
-          # MODIFIED: Ensure it always pulls from the repo
+          # Make sure this image is in a public registry
+          image: sudharsanan62034/shogun:landing 
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
-          env:
-            - name: NODE_ENV
-              value: "production"
-            - name: PORT
-              value: "3000"
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
+            - containerPort: 3000 # The port your app listens on
