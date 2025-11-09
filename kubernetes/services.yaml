@@ -12,4 +12,4 @@ spec:
     - name: http
       port: 3000         # Service port (inside cluster)
       targetPort: 3000   # Container port
-      nodePort: 32000    # External port on node (accessible via browser)
+      nodePort: 3008    # External port on node (accessible via browser)
