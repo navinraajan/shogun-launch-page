@@ -5,7 +5,7 @@ metadata:
   labels:
     app: shogun
 spec:
-  replicas: 2  # you can scale replicas later
+  replicas: 2
   selector:
     matchLabels:
       app: shogun
@@ -16,8 +16,10 @@ spec:
     spec:
       containers:
         - name: shogun-container
-          image: shogun-app:latest  # local image
-          imagePullPolicy: IfNotPresent  # prevents trying to pull from registry
+          # MODIFIED: Point to your Docker Hub repository
+          image: sudharsanan62034/shogun:landing
+          # MODIFIED: Ensure it always pulls from the repo
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           env:
