@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: shogun-service
 spec:
-  type: NodePort  # <-- This is the important part
+  type: ClusterIP  # <-- This is the important part
   selector:
     app: shogun     # <-- This MUST MATCH the 'app' label in your deployment
   ports:
@@ -14,4 +14,4 @@ spec:
       # Optional: You can specify a port. 
       # If you leave this out, Kubernetes picks a random one.
       # It MUST be in the 30000-32767 range.
-      nodePort: 30100
+      
