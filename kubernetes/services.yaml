@@ -8,7 +8,8 @@ spec:
     app: shogun     # <-- This MUST MATCH the 'app' label in your deployment
   ports:
     - protocol: TCP
-      port: 80         # The port inside the cluster (optional to use)
+      port: 80 
+              # The port inside the cluster (optional to use)
       targetPort: 3000 # The 'containerPort' from your deployment
       
       # Optional: You can specify a port. 
